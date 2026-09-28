@@ -18,7 +18,7 @@ end
 
 -- config
 local SCRIPT_VERSION = "1.0 Beta"
--- delta blocks purchase prompts entirely so we always copy the web link as backup
+-- some execs here blocks purchase prompts entirely so we always copy the web link as backup
 local DONATION_PRODUCT_ID = 3715327753
 local GAMEPASS_ID = 1891025004
 local GAMEPASS_URL = "https://www.roblox.com/game-pass/" .. GAMEPASS_ID
@@ -28,16 +28,16 @@ local THEME_FILE = SAVE_FOLDER .. "/theme.txt"
 local REPO_URL = "https://github.com/InfinitelyMNDEV/catware"
 local TOGGLE_KEY = Enum.KeyCode.RightShift
 
--- stable release first, raw dist as backup
+-- stable release first, raw dist as backup (this one for sindui docs)
 local WINDUI_URLS = {
     "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua",
     "https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua",
 }
 
--- touch and no keyboard means phone, good enough
+-- touch and no keyboard means phone
 local IS_MOBILE = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 
--- state
+-- state stuff
 local WindUI = nil
 local winduiReady = false
 local winduiFailed = false
@@ -51,7 +51,7 @@ local openMainUI
 local showDonationPopup
 local unloadAll
 
--- download windui in the background so the popup never waits on http
+-- download windui in the background so the popup never waits on http (its fsster and more reliable)
 local function tryLoadWindUI()
     for _, url in ipairs(WINDUI_URLS) do
         local ok, lib = pcall(function()
@@ -130,7 +130,7 @@ local function neverShowSaved()
     return ok and saved == true
 end
 
--- hidden ui container first, then coregui, then playergui. test each one
+-- hidden ui container first, then coregui, then playergui. test rach one
 local function getGuiParent()
     local candidates = {}
     if type(gethui) == "function" then
@@ -283,7 +283,7 @@ showDonationPopup = function()
         end
     end)
 
-    -- no fullscreen backdrop, it blocked the camera. card floats on its own
+    -- no fullscreen backdro it blocked the camera. card floats on its own
     local holder = Instance.new("Frame")
     holder.Name = "Holder"
     holder.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -751,7 +751,7 @@ openMainUI = function()
         notify("CatWare", "windui failed to load, cant build the window", "info")
         return
     end
-    -- still downloading, wait it out
+    -- still downloading wait it to complete
     task.spawn(function()
         local waited = 0
         while not winduiReady and not winduiFailed and waited < 30 do
