@@ -1,254 +1,281 @@
-🐱 CatWare
+<div align="center">
 
-«A clean, customizable Roblox UI template built with WindUI.
-Developed by Eclipse Team · "v1.0 Beta"»
+# 🐱 CatWare
 
-""Version" (https://img.shields.io/badge/version-1.0%20Beta-c75472?style=for-the-badge)" (https://github.com/InfinitelyMNDEV/catware)
-""License" (https://img.shields.io/badge/license-GNU%20GPL-blue?style=for-the-badge)" (https://www.gnu.org/licenses/gpl-3.0.html)
-""Status" (https://img.shields.io/badge/status-template-6c5ec7?style=for-the-badge)" (https://github.com/InfinitelyMNDEV/catware)
-""Lua" (https://img.shields.io/badge/language-Luau-2c2d72?style=for-the-badge&logo=lua)" (https://luau.org/)
+### A customizable Roblox UI template built with WindUI
+
+**v1.0 Beta** · **Eclipse Team** · **GNU GPL**
+
+<p>
+  <img src="https://img.shields.io/badge/version-1.0%20Beta-c75472?style=for-the-badge" alt="Version 1.0 Beta">
+  <img src="https://img.shields.io/badge/status-template-6c5ec7?style=for-the-badge" alt="Status: Template">
+  <img src="https://img.shields.io/badge/license-GNU%20GPL-blue?style=for-the-badge" alt="GNU GPL">
+  <img src="https://img.shields.io/badge/Luau-2c2d72?style=for-the-badge&logo=lua" alt="Luau">
+</p>
+
+<p>
+  <a href="https://github.com/InfinitelyMNDEV/catware">Repository</a>
+  ·
+  <a href="https://github.com/Footagesus/WindUI">WindUI</a>
+  ·
+  <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL</a>
+</p>
+
+</div>
 
 ---
 
-✨ About
+## ✨ About
 
-CatWare is an open-source Roblox UI/template project created by Eclipse Team.
+**CatWare** is an open-source Roblox UI template created by **Eclipse Team**.
 
-The project is currently a template rather than a fully functional script. Its main purpose is to provide a foundation for experimenting with UI design, themes, configuration persistence, notifications, donation prompts, and WindUI integration.
+The project is currently a **template rather than a fully functional script**. It is designed as a foundation for experimenting with Roblox UI development, themes, configuration persistence, notifications, donation prompts, mobile support, and WindUI integration.
 
-«⚠️ CatWare v1.0 Beta is not intended to be treated as a finished release.»
+> 🟡 **CatWare v1.0 Beta is experimental and unfinished.**
 
 The source is intentionally available for inspection, modification, experimentation, and learning.
 
 ---
 
-🎨 Features
+## 🚀 Features
 
-🖥️ Interface
+### 🖥️ Interface
 
-- Modern dark-themed interface
-- Responsive sizing for desktop and mobile
+- Modern dark-themed UI
+- Desktop and mobile layout support
 - Floating reopen button
 - Configurable UI toggle key
-- Mobile-specific UI adjustments
-- Clean notification system
-- Graceful UI unloading
+- Mobile-specific sizing
+- Notification system
+- Graceful unload system
+- Defensive error handling with `pcall()`
 
-🌈 Themes
+### 🎨 Themes
 
-CatWare currently includes 5 built-in themes:
+CatWare currently includes five built-in themes:
 
-Theme| Style
-🐱 CatWare| Pink / dark
-🌙 CatWare Midnight| Purple / dark
-🔥 CatWare Ember| Warm orange / dark
-🌊 CatWare Ocean| Blue / dark
-🌲 CatWare Forest| Green / dark
+| Theme | Style |
+|---|---|
+| 🐱 **CatWare** | Pink / dark |
+| 🌙 **CatWare Midnight** | Purple / dark |
+| 🔥 **CatWare Ember** | Warm orange / dark |
+| 🌊 **CatWare Ocean** | Blue / dark |
+| 🌲 **CatWare Forest** | Green / dark |
 
-Themes are registered through WindUI and can be switched directly from the Settings tab.
+Themes are registered through WindUI and can be changed from the Settings tab.
 
-The selected theme can also be saved locally when the environment supports file APIs.
+When filesystem APIs are available, the selected theme can also be saved between executions.
 
 ---
 
-📱 Desktop & Mobile
+## 📱 Mobile Support
 
-CatWare detects whether it is running in a touch-only environment:
+CatWare automatically detects touch-only environments:
 
+```lua
 local IS_MOBILE = UserInputService.TouchEnabled
     and not UserInputService.KeyboardEnabled
+```
 
-On mobile:
+### Mobile
 
-- The window is resized for smaller screens
-- The UI becomes non-resizable
-- Notifications are moved lower
-- A floating button can be used to reopen the interface
+- Smaller responsive window
+- Non-resizable interface
+- Notifications moved lower
+- Floating button for reopening the UI
 
-On desktop:
+### Desktop
 
-- The default toggle key is Right Shift
-- The window can be resized
-- Keyboard controls are available
+- Default toggle key: `RightShift`
+- Resizable window
+- Keyboard-based controls
 
 ---
 
-💾 Configuration Persistence
+## 💾 Configuration Persistence
 
-CatWare can optionally use executor-provided filesystem APIs to save settings.
+When the execution environment provides filesystem APIs, CatWare stores its configuration in:
 
-The project uses:
-
+```text
 CatWare/
 ├── donate_popup.txt
 └── theme.txt
+```
 
-Donation popup
+### `donate_popup.txt`
 
-"donate_popup.txt" stores whether the user selected:
+Stores whether the user selected:
 
-«Never show this again»
+> **Never show this again**
 
-Theme
+### `theme.txt`
 
-"theme.txt" stores the currently selected CatWare theme.
+Stores the currently selected CatWare theme.
 
-File functionality is optional because not every environment provides filesystem APIs.
+Filesystem functionality is optional because not every execution environment provides these APIs.
 
 ---
 
-💳 Donation System
+## 💳 Donation System
 
-CatWare includes an optional donation prompt.
+CatWare includes an optional donation popup.
 
 The system attempts to:
 
-1. Display an in-game purchase prompt.
+1. Display the in-game purchase prompt.
 2. Copy the game-pass URL to the clipboard.
-3. Notify the user if clipboard functionality is unavailable.
+3. Notify the user when clipboard functionality is unavailable.
 4. Detect when the purchase prompt closes.
-5. Fall back to the web link when necessary.
-6. Prevent the donation popup from blocking the main interface indefinitely.
+5. Provide the web purchase link as a fallback.
+6. Prevent the donation popup from keeping the interface locked indefinitely.
 
-The configured game pass is:
+### Configured Game Pass
 
+```text
 https://www.roblox.com/game-pass/1891025004
+```
 
-The donation product ID is configured inside the source.
+The donation product ID is configured directly inside the source.
 
-«Note: Purchase prompts and clipboard behavior depend on the environment in which the script is executed.»
+> ⚠️ Purchase prompts, clipboard access, and filesystem functionality depend on the environment in which CatWare is executed.
 
 ---
 
-🎨 UI Architecture
+## 🎨 WindUI
 
-CatWare uses WindUI as its primary UI framework.
+CatWare uses **WindUI** as its primary UI library.
 
 WindUI is loaded dynamically using two fallback sources:
 
-1. WindUI latest release
-2. WindUI raw distribution
+1. The latest WindUI release
+2. The raw WindUI distribution
 
-If the first source fails, CatWare attempts the second one.
+If the first source fails, CatWare attempts the second.
 
-If WindUI cannot be loaded, CatWare displays an appropriate notification instead of silently failing.
+If WindUI cannot be loaded, CatWare displays a notification instead of silently failing.
 
-WindUI
-
-CatWare uses:
-
-WindUI by Footagesus
-
-Repository:
+### WindUI Repository
 
 https://github.com/Footagesus/WindUI
 
 ---
 
-🧩 Current UI Structure
+## 🧩 UI Structure
 
+```text
 CatWare
 │
-├── Home
-│   ├── Credits
-│   │   ├── CatWare Information
-│   │   ├── License
-│   │   └── Repository
-│   │       └── Copy Repository Link
-│   │
-│   └── Settings
-│       ├── Theme
-│       │   └── UI Theme
-│       │
-│       └── Interface
-│           ├── Controls
-│           ├── Toggle UI Keybind
-│           ├── Show Donation Popup
-│           └── Unload CatWare
+└── Home
+    │
+    ├── Credits
+    │   ├── CatWare Information
+    │   ├── License
+    │   └── Repository
+    │       └── Copy Repository Link
+    │
+    └── Settings
+        │
+        ├── Theme
+        │   └── UI Theme
+        │
+        └── Interface
+            ├── Controls
+            ├── Toggle UI Keybind
+            ├── Show Donation Popup
+            └── Unload CatWare
+```
 
 ---
 
-⌨️ Controls
+## ⌨️ Controls
 
-Desktop
+### Desktop
 
-Default toggle key:
+The default UI toggle key is:
 
+```text
 Right Shift
+```
 
-The key can be changed through:
+It can be changed through:
 
+```text
 Settings → Interface → Toggle UI Keybind
+```
 
-Mobile
+### Mobile
 
-Use the floating CatWare button to reopen the interface.
+Use the floating **CatWare** button to reopen the interface.
 
 ---
 
-🧹 Unloading
+## 🧹 Unloading
 
-CatWare includes an unload system that attempts to clean up:
+CatWare includes an unload system designed to clean up its UI and connections.
+
+The unload process removes:
 
 - Main window
 - Donation popup
-- Purchase connections
+- Purchase event connections
 - UI references
-- Active state
+- Active popup state
 
-The unload button can be found under:
+Use:
 
+```text
 Settings → Interface → Unload CatWare
+```
 
 ---
 
-🛡️ Error Handling
+## 🛡️ Error Handling
 
-A major part of CatWare's template architecture is defensive execution.
+CatWare is designed to be relatively defensive when dealing with optional or unreliable APIs.
 
-Many potentially unreliable operations are wrapped with "pcall()" so a failure in one component doesn't necessarily destroy the entire UI.
+Potentially failing operations are wrapped with `pcall()` where appropriate.
 
-Examples include:
+This includes:
 
 - WindUI loading
 - Theme registration
 - UI element creation
 - Clipboard access
-- Filesystem access
+- Filesystem operations
 - GUI parenting
 - Marketplace prompts
 - Window creation
 
-This is particularly useful because different execution environments may expose different APIs.
+This helps individual failures avoid taking down the rest of the interface.
 
 ---
 
-📦 Environment Compatibility
+## 📦 Environment APIs
 
-CatWare is designed around environments that may provide additional Lua/executor APIs.
+Some CatWare features depend on additional Lua APIs provided by the execution environment.
 
-Some functionality is optional.
+| API | Purpose | Required |
+|---|---|:---:|
+| `loadstring` | Loading WindUI | ✅ |
+| `game:HttpGet()` | Downloading WindUI | ✅ |
+| `setclipboard` | Clipboard support | ❌ |
+| `toclipboard` | Clipboard fallback | ❌ |
+| `makefolder` | Creating configuration folder | ❌ |
+| `isfolder` | Checking configuration folder | ❌ |
+| `writefile` | Saving configuration | ❌ |
+| `isfile` | Checking saved configuration | ❌ |
+| `readfile` | Loading configuration | ❌ |
+| `gethui` | Preferred UI container | ❌ |
 
-API| Purpose| Required?
-"loadstring"| Loading WindUI| Yes
-"game:HttpGet()"| Downloading WindUI| Yes
-"setclipboard"| Clipboard support| No
-"toclipboard"| Clipboard fallback| No
-"makefolder"| Saving settings| No
-"isfolder"| Checking settings folder| No
-"writefile"| Saving settings| No
-"isfile"| Checking saved settings| No
-"readfile"| Loading saved settings| No
-"gethui"| Preferred UI parent| No
-
-If optional APIs are unavailable, CatWare attempts to continue operating without them.
+CatWare attempts to continue functioning when optional APIs are unavailable.
 
 ---
 
-🔧 Configuration
+## ⚙️ Configuration
 
-Important configuration values are located near the top of the source:
+Important configuration values are located near the beginning of the source:
 
+```lua
 local SCRIPT_VERSION = "1.0 Beta"
 
 local DONATION_PRODUCT_ID = 3715327753
@@ -259,64 +286,70 @@ local SAVE_FOLDER = "CatWare"
 local REPO_URL = "https://github.com/InfinitelyMNDEV/catware"
 
 local TOGGLE_KEY = Enum.KeyCode.RightShift
+```
 
-This makes basic project configuration easy to locate and modify.
+This keeps the project's primary configuration easy to find and modify.
 
 ---
 
-📁 Project Structure
+## 📁 Recommended Repository Structure
 
-A recommended repository structure is:
-
+```text
 CatWare/
 │
 ├── README.md
 ├── CatWare.lua
 ├── LICENSE
 └── .gitignore
+```
 
-Additional files can be added as the project develops.
+Additional files can be introduced as the project grows.
 
 ---
 
-🧪 Project Status
+## 🧪 Project Status
 
-Current version: "1.0 Beta"
+| Property | Value |
+|---|---|
+| Version | `1.0 Beta` |
+| Status | 🟡 Experimental Template |
+| UI Library | WindUI |
+| Language | Luau |
+| License | GNU GPL |
+| Developer Team | Eclipse Team |
 
-Status: 🟡 Template / Experimental
+CatWare is currently a **foundation/template**, not a finished production project.
 
-CatWare is currently a foundation rather than a complete production-ready project.
-
-Future development may include:
+Potential future development may include:
 
 - More UI components
 - Additional themes
 - More configuration options
+- Expanded customization
+- Improved mobile support
+- More animations
+- Additional documentation
 - Expanded functionality
-- Better mobile support
-- Additional customization
-- More polished animations
-- Expanded documentation
 
 ---
 
-👥 Eclipse Team
+## 👥 Eclipse Team
 
-CatWare is developed by Eclipse Team.
+CatWare is developed by **Eclipse Team**.
 
-Contributors
+### Contributors
 
-- MNDEV — Main developer
-- Bounty — Team member
-- Mahmood — Team member
+- **MNDEV** — Main developer
+- **Bounty** — Team member
+- **Mahmood** — Team member
 
 ---
 
-📜 License
+## 📜 License
 
-CatWare is licensed under the GNU General Public License (GPL).
+CatWare is licensed under the **GNU General Public License**.
 
-This means you are allowed to:
+Under the GPL, you may generally:
 
 - ✅ Use the source
 - ✅ Study the source
@@ -324,17 +357,21 @@ This means you are allowed to:
 - ✅ Share copies
 - ✅ Distribute modified versions
 
-When distributing modified versions, the GPL's requirements must still be followed.
+If you distribute modified versions, you must comply with the applicable requirements of the GPL.
 
-See the included "LICENSE" file for the complete license text.
+See the included `LICENSE` file for the complete license text.
+
+**License:** GNU GPL
+
+https://www.gnu.org/licenses/gpl-3.0.html
 
 ---
 
-⚠️ Disclaimer
+## ⚠️ Disclaimer
 
-CatWare is provided as an open-source template and experimental project.
+CatWare is provided as an **open-source template and experimental project**.
 
-The repository is intended for:
+It is intended for:
 
 - Learning
 - UI experimentation
@@ -343,23 +380,26 @@ The repository is intended for:
 - Modification
 - Personal projects
 
-The project may contain unfinished functionality because it is currently a Beta template.
+The project is currently in **Beta**, so functionality may change, break, or remain unfinished.
 
 ---
 
-🔗 Links
+## 🔗 Links
 
-Resource| Link
-🐱 CatWare Repository| https://github.com/InfinitelyMNDEV/catware
-🎨 WindUI| https://github.com/Footagesus/WindUI
-📜 GNU GPL| https://www.gnu.org/licenses/gpl-3.0.html
+| Resource | Link |
+|---|---|
+| 🐱 CatWare | https://github.com/InfinitelyMNDEV/catware |
+| 🎨 WindUI | https://github.com/Footagesus/WindUI |
+| 📜 GNU GPL | https://www.gnu.org/licenses/gpl-3.0.html |
 
 ---
 
-<div align="center">🐱 CatWare
+<div align="center">
 
-Built by Eclipse Team. Open source. Experimental.
+## 🐱 CatWare
 
-"v1.0 Beta"
+**Built by Eclipse Team. Open source. Experimental.**
+
+`v1.0 Beta`
 
 </div>
