@@ -141,6 +141,51 @@ Da Hood also supports chat-style commands such as `!pred`, `!fov`, `!lock`, `!un
 
 ---
 
+## 📥 Installation
+
+1. Get a Roblox script executor that supports `loadstring` and `game:HttpGet()`.
+2. Join the game you want to use the script in.
+3. Paste the matching line below into your executor and run it.
+4. Press **Right Shift** (or tap the floating button on mobile) to show or hide the UI.
+
+### UI templates
+
+**WindUI template**
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/UITemplate/Tetoware_WindUI.lua"))()
+```
+
+**Rayfield template**
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/UITemplate/Tetoware_Rayfield"))()
+```
+
+### Supported games
+
+**Blox Strike (v2.3)**
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/SupportedGames/Bloxstrike/Bloxstrike_verision2.3.lua"))()
+```
+
+**Da Hood (v1.0 Beta)**
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/SupportedGames/Dahood/dahood_verision1.lua"))()
+```
+
+> 💡 Always use the **raw** link (`raw.githubusercontent.com`). A normal `github.com/.../blob/...` link returns an HTML page and will not run.
+
+> 🌐 An internet connection is required because WindUI (and Rayfield) is downloaded every time the script runs.
+
+### Manual install
+
+Open the file from this repo, copy its full contents into your executor and run it.
+
+---
+
 ## 🚀 Features
 
 ### 🖥️ Interface
@@ -316,17 +361,6 @@ Tap the floating **Tetoware** button to reopen the interface.
 
 ---
 
-## 🚀 Usage
-
-1. Pick the script for your game from `SupportedGames/`, or a template from `UITemplate/`.
-2. Copy the contents of the file into your Roblox script executor.
-3. Join the matching game and execute it.
-4. Press **Right Shift** (or tap the floating button on mobile) to show or hide the UI.
-
-An internet connection is required because WindUI is downloaded when the script runs.
-
----
-
 ## 🛠️ Building Your Own Script
 
 1. Copy `UITemplate/Tetoware_WindUI.lua`.
@@ -446,14 +480,15 @@ Please read [`IMPORTANT.md`](IMPORTANT.md) before sharing the scripts.
 
 **Content creators and script showcasers**
 
-- Do not place the provided scripts behind monetized links (Lootlabs, Linkvertise, etc.).
+- ❌ Do not monetize the scripts or place them behind monetized links (Lootlabs, Linkvertise, etc.).
+- ✅ Showcasing and reviewing is welcome, credit InfinitelyMNDEV and Eclipse Team.
 
 **Script developers**
 
-- Do not put the script behind a key or call system, or give credit to yourself.
-- Do not make your script closed source.
+- ✅ You are allowed to make your own script closed source.
+- ❌ Do not put the script behind a key system or call system, or credit yourself for the original work.
 
-> These are requests from the author. The legal terms of the project are in the [MIT License](LICENSE).
+> These are the author's terms for sharing. The legal terms of the project are in the [MIT License](LICENSE).
 
 ---
 
