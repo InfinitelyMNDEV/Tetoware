@@ -159,7 +159,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetow
 **Rayfield template**
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/UITemplate/Tetoware_Rayfield"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfinitelyMNDEV/Tetoware/refs/heads/main/UITemplate/Tetoware_Rayfield.lua"))()
 ```
 
 ### Supported games
