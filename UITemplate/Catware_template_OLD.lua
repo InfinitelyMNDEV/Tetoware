@@ -1,10 +1,7 @@
 -- CatWare - Version 1.0 Beta
--- This script is licensed under GNU GPL and is created by Eclipse Team
--- This is a template not a functioning script, you can lowkey inspect it
--- Also it uses WindUI as the library repo link https://github.com/Footagesus/WindUI
--- Note this is an old verision of the template and is no longer used!
+-- Made by Apogee Team
+-- This script is licensed under MIT
 
--- services
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -17,9 +14,7 @@ if not LocalPlayer then
     LocalPlayer = Players:GetPropertyChangedSignal("LocalPlayer"):Wait()
 end
 
--- config
 local SCRIPT_VERSION = "1.0 Beta"
--- some execs here blocks purchase prompts entirely so we always copy the web link as backup
 local DONATION_PRODUCT_ID = 3715327753
 local GAMEPASS_ID = 1891025004
 local GAMEPASS_URL = "https://www.roblox.com/game-pass/" .. GAMEPASS_ID
@@ -29,16 +24,13 @@ local THEME_FILE = SAVE_FOLDER .. "/theme.txt"
 local REPO_URL = "https://github.com/InfinitelyMNDEV/catware"
 local TOGGLE_KEY = Enum.KeyCode.RightShift
 
--- stable release first, raw dist as backup (this one for sindui docs)
 local WINDUI_URLS = {
     "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua",
     "https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua",
 }
 
--- touch and no keyboard means phone
 local IS_MOBILE = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 
--- state stuff
 local WindUI = nil
 local winduiReady = false
 local winduiFailed = false
@@ -47,12 +39,10 @@ local popupGui = nil
 local popupOpen = false
 local purchaseConn = nil
 
--- forward decls, popup and window call each other
 local openMainUI
 local showDonationPopup
 local unloadAll
 
--- download windui in the background so the popup never waits on http (its fsster and more reliable)
 local function tryLoadWindUI()
     for _, url in ipairs(WINDUI_URLS) do
         local ok, lib = pcall(function()
@@ -67,7 +57,6 @@ local function tryLoadWindUI()
     winduiFailed = true
 end
 
--- works with or without windui
 local function notify(title, content, icon)
     if WindUI then
         local ok = pcall(function()
@@ -105,7 +94,6 @@ local function round(obj, radius)
     c.Parent = obj
 end
 
--- executor file stuff, not every one ships these
 local function ensureFolder()
     if type(makefolder) ~= "function" or type(isfolder) ~= "function" then return end
     pcall(function()
@@ -131,7 +119,6 @@ local function neverShowSaved()
     return ok and saved == true
 end
 
--- hidden ui container first, then coregui, then playergui. test rach one
 local function getGuiParent()
     local candidates = {}
     if type(gethui) == "function" then
@@ -149,7 +136,6 @@ local function getGuiParent()
     return LocalPlayer:WaitForChild("PlayerGui")
 end
 
--- windui only accepts this exact theme shape, name + color3 values, nothing else
 local THEME_LIST = {
     {
         Name = "CatWare",
@@ -241,7 +227,6 @@ local function loadSavedTheme()
     return nil
 end
 
--- popup palette. near black card, green confirm, gray decline
 local PALETTE = {
     confirm = Color3.fromHex("#1F7A44"),
     confirmHover = Color3.fromHex("#289457"),
@@ -256,7 +241,6 @@ local PALETTE = {
     red = Color3.fromHex("#FF6B7E"),
 }
 
--- donate popup. flat near black card, no shadow behind it, nothing extra
 showDonationPopup = function()
     if popupOpen then return end
     popupOpen = true
@@ -274,7 +258,6 @@ showDonationPopup = function()
     gui.Parent = getGuiParent()
     popupGui = gui
 
-    -- if some executor nuked the parent, retry somewhere visible
     task.delay(1, function()
         if not popupOpen then return end
         if gui.Parent == nil or not gui:IsDescendantOf(game) then
@@ -284,7 +267,6 @@ showDonationPopup = function()
         end
     end)
 
-    -- no fullscreen backdro it blocked the camera. card floats on its own
     local holder = Instance.new("Frame")
     holder.Name = "Holder"
     holder.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -335,7 +317,6 @@ showDonationPopup = function()
     message.TextYAlignment = Enum.TextYAlignment.Top
     message.Parent = card
 
-    -- checkbox
     local checkBtn = Instance.new("TextButton")
     checkBtn.BackgroundTransparency = 1
     checkBtn.Position = UDim2.fromOffset(24, 124)
@@ -425,7 +406,6 @@ showDonationPopup = function()
     round(sureBtn, 8)
     sureBtn.Parent = card
 
-    -- hover, harmless on touch
     sureBtn.MouseEnter:Connect(function()
         TweenService:Create(sureBtn, TweenInfo.new(0.1), { BackgroundColor3 = PALETTE.confirmHover }):Play()
     end)
@@ -491,7 +471,6 @@ showDonationPopup = function()
         if closing then return end
         if checked then saveNeverShow() end
 
-        -- watch for the purchase window closing, bought or not
         pcall(function()
             purchaseConn = MarketplaceService.PromptProductPurchaseFinished:Connect(function(plr, productId)
                 if plr == LocalPlayer and productId == DONATION_PRODUCT_ID and popupOpen then
@@ -500,14 +479,12 @@ showDonationPopup = function()
             end)
         end)
 
-        -- try the in game prompt, delta usually blocks this silently
         local prompted = false
         pcall(function()
             MarketplaceService:PromptProductPurchase(LocalPlayer, DONATION_PRODUCT_ID)
             prompted = true
         end)
 
-        -- always hand over the web link too since prompts are unreliable
         if copyToClipboard(GAMEPASS_URL) then
             notify("CatWare", "game pass link copied. if no purchase window opened, buy it in your browser", "heart")
         else
@@ -519,7 +496,6 @@ showDonationPopup = function()
             return
         end
 
-        -- failsafe so the ui always opens even if no window ever shows
         task.delay(12, function()
             if popupOpen then
                 closePopup(function() openMainUI() end)
@@ -527,12 +503,10 @@ showDonationPopup = function()
         end)
     end)
 
-    -- entrance, slide and scale only. no transparency tweens, nothing can get stuck invisible
     TweenService:Create(scale, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = uiScale }):Play()
     TweenService:Create(holder, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Position = UDim2.new(0.5, 0, 0.5, 0) }):Play()
 end
 
--- nukes everything including the popup
 unloadAll = function()
     popupOpen = false
     if purchaseConn then
@@ -559,7 +533,6 @@ local function buildWindow()
 
     registerThemes()
 
-    -- big enough to tap on phones, small enough to still see the game
     local cam = Workspace.CurrentCamera
     local vp = (cam and cam.ViewportSize) or Vector2.new(1280, 720)
     local winSize
@@ -592,11 +565,9 @@ local function buildWindow()
     window = result
 
     if IS_MOBILE then
-        -- keep notifications out of the jump button's way
         pcall(function() WindUI:SetNotificationLower(true) end)
     end
 
-    -- floating reopen button, mostly for phones
     pcall(function()
         window:EditOpenButton({
             Title = "CatWare",
@@ -605,21 +576,17 @@ local function buildWindow()
         })
     end)
 
-    -- saved theme wins over the default
     local savedTheme = loadSavedTheme()
     if savedTheme then
         pcall(function() WindUI:SetTheme(savedTheme) end)
     end
 
-    -- tabs and sections first, elements go in after
     local creditsTab, settingsTab, themeSec, uiSec
     local okTabs, tabErr = pcall(function()
-        -- tab section "home" holds both tabs, settings is not separated
         local homeGroup = window:Section({ Title = "Home", Opened = true })
         creditsTab = homeGroup:Tab({ Title = "Credits", Icon = "info" })
         settingsTab = homeGroup:Tab({ Title = "Settings", Icon = "settings" })
 
-        -- credits tab
         local creditsSec = creditsTab:Section({ Title = "Credits", Opened = true })
         creditsSec:Paragraph({
             Title = "CatWare v" .. SCRIPT_VERSION,
@@ -627,7 +594,7 @@ local function buildWindow()
         })
         creditsSec:Paragraph({
             Title = "License",
-            Desc = "GNU GPL, fully open source.",
+            Desc = "MIT, fully open source.",
         })
 
         local repoSec = creditsTab:Section({ Title = "Repository", Opened = true })
@@ -645,7 +612,6 @@ local function buildWindow()
         return
     end
 
-    -- add elements one at a time so a bad one cant kill the rest
     local function tryElement(label, fn)
         local okEl, err = pcall(fn)
         if not okEl then
@@ -707,7 +673,6 @@ local function buildWindow()
                     else
                         pcall(function() enum = Enum.KeyCode[tostring(key)] end)
                     end
-                    -- only react to an actual rebind, not every key press
                     if enum and enum ~= TOGGLE_KEY then
                         TOGGLE_KEY = enum
                         pcall(function() window:SetToggleKey(enum) end)
@@ -752,7 +717,6 @@ openMainUI = function()
         notify("CatWare", "windui failed to load, cant build the window", "info")
         return
     end
-    -- still downloading wait it to complete
     task.spawn(function()
         local waited = 0
         while not winduiReady and not winduiFailed and waited < 30 do
@@ -767,16 +731,13 @@ openMainUI = function()
     end)
 end
 
--- startup
 task.spawn(tryLoadWindUI)
 
 if neverShowSaved() then
-    -- they said never again, skip straight to the ui
     openMainUI()
 else
     local ok = pcall(showDonationPopup)
     if not ok then
-        -- popup blew up, dont leave them with nothing
         if popupGui then
             popupGui:Destroy()
             popupGui = nil
