@@ -11,8 +11,6 @@
 
 <p>
   <img src="https://img.shields.io/badge/content%20creators-no%20monetizing-d92b2b?style=for-the-badge" alt="Content creators: no monetizing">
-  <img src="https://img.shields.io/badge/script%20devs-closed%20source%20allowed-2ea44f?style=for-the-badge" alt="Script devs: closed source not allowed">
-</p>
 
 </div>
 
