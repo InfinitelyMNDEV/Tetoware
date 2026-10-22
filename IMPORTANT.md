@@ -11,7 +11,7 @@
 
 <p>
   <img src="https://img.shields.io/badge/content%20creators-no%20monetizing-d92b2b?style=for-the-badge" alt="Content creators: no monetizing">
-  <img src="https://img.shields.io/badge/script%20devs-closed%20source%20allowed-2ea44f?style=for-the-badge" alt="Script devs: closed source allowed">
+  <img src="https://img.shields.io/badge/script%20devs-closed%20source%20allowed-2ea44f?style=for-the-badge" alt="Script devs: closed source not allowed">
 </p>
 
 </div>
@@ -42,7 +42,7 @@ You can build on top of Tetoware, including making your own script **closed sour
 
 | | Rule |
 |:---:|---|
-| ✅ | You **may** make your script closed source |
+| ❌️ | You **can't** make your script closed source |
 | ✅ | Modify, fork and build on the templates and scripts |
 | ✅ | Keep the MIT copyright and license notice in the parts you reuse |
 | ❌ | Do **not** put the script behind a key system or call system |
@@ -56,7 +56,7 @@ You can build on top of Tetoware, including making your own script **closed sour
 |---|:---:|:---:|
 | Showcase / review | ✅ | ✅ |
 | Monetized links | ❌ | ❌ |
-| Closed source | n/a | ✅ |
+| Closed source | n/a | ❌️ |
 | Key / call systems | ❌ | ❌ |
 | Claim the original work | ❌ | ❌ |
 | Credit Eclipse Team | ✅ | ✅ |
